@@ -63,6 +63,10 @@ public class RNPrintModule extends ReactContextBaseJavaModule {
 
         if (html != null) {
             try {
+                PrintAttributes.Builder builder = new PrintAttributes.Builder();
+
+                builder.setMediaSize(PrintAttributes.MediaSize.ISO_A5);
+
                 UiThreadUtil.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -104,7 +108,7 @@ public class RNPrintModule extends ReactContextBaseJavaModule {
                                     }
                                 };
                                 // Pass in the ViewView's document adapter.
-                                printManager.print(jobName, adapter, null);
+                                printManager.print(jobName, adapter, builder.build());
                                 mWebView = null;
                                 promise.resolve(jobName);
                             }
@@ -169,7 +173,7 @@ public class RNPrintModule extends ReactContextBaseJavaModule {
                     }
                 };
 
-                printManager.print(jobName, pda, null);
+                printManager.print(jobName, pda, builder.build());
                 promise.resolve(jobName);
 
             } catch (Exception e) {
